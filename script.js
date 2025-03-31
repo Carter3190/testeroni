@@ -2,7 +2,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("signInButton").addEventListener("click", function() {
-            window.location.href = 'index-profile.html';
+            window.location.href = 'sign-in.html';
         });
     });
 </script>
