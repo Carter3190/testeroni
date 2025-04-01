@@ -4,6 +4,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auxilium</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="styles.css"> 
+  </head>
+  <head>
+    
   <style>
     /* Basic Reset */
     * {
@@ -41,22 +45,22 @@
       font-weight: 600;
     }
 
-    
     /* Sign In Section */
- <sript>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In Page</title>
-    
-    <button id='signInButton'>Sign In</button>
-    <script src="script.js"></script>
+    .sign-in {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #d6c6f7;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
     .sign-in:hover {
       background-color: #c0a0f2;
     }
-</script>
-    
+
     /* Hero Section */
-   
     .hero {
       display: flex;
       justify-content: center;
@@ -240,3 +244,4 @@
         carousel.appendChild(serviceItem);
       });
     }
+    
