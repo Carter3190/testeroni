@@ -1,14 +1,10 @@
-<html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auxilium</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="styles.css"> 
-  </head>
-  <head>
-    
   <style>
     /* Basic Reset */
     * {
@@ -62,6 +58,20 @@
     }
 
     /* Hero Section */
+    .hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background-image: url('Jerry.jpg'); /* Replace with your image path */
+  background-size: cover; /* Cover the entire hero section */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Avoid repeating the image */
+  color: white;
+  flex-direction: column;
+  text-align: center;
+}
+    
     .hero {
       display: flex;
       justify-content: center;
@@ -180,13 +190,13 @@
       <button id="search-button">Search</button>
     </div>
   </div>
- 
+
   <!-- Services Carousel -->
   <div class="services">
     <h3>Our Services</h3>
     <div class="carousel" id="service-carousel">
       <div class="service-item">
-        <img src="https://posture-works.com/wp-content/uploads/2023/01/understanding-different-types-of-chiropractic-treatment-1024x682.jpg" alt="Chiropractor">
+        <img src="https://via.placeholder.com/200x150?text=Chiropractor" alt="Chiropractor">
         <p>Chiropractor</p>
       </div>
       <div class="service-item">
@@ -216,7 +226,7 @@
   <script>
     // Service data
     const services = [
-      { name: 'Chiropractor', image: 'https://via.placeholder.com/200x150?text=Chiropractor' },
+      { name: 'Chiropractor', image: 'https://via.placeholder.com/200x150?text=chiropractor },
       { name: 'Oil Change', image: 'https://via.placeholder.com/200x150?text=Oil+Change' },
       { name: 'DJ', image: 'https://via.placeholder.com/200x150?text=Dj' },
       { name: 'Photography', image: 'https://via.placeholder.com/200x150?text=Photography' },
@@ -245,4 +255,3 @@
         carousel.appendChild(serviceItem);
       });
     }
-    
