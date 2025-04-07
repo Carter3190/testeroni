@@ -130,6 +130,14 @@
   </style>
 </head>
 <body>
+  
+  <script>
+  // Simple check (replace with proper session/token check later)
+  if (!document.referrer.includes("login.html")) {
+    window.location.href = "login.html";
+  }
+</script>
+
 
   <!-- Header -->
   <header>
