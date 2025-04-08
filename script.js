@@ -5,7 +5,7 @@
         if (signInButton) {
             signInButton.addEventListener("click", function (event) {
                 event.preventDefault();
-                window.location.href = "sign-in.html";
+                window.location.href = "profile.html";
             });
         }
     });
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (signInButton) {
         signInButton.addEventListener("click", function (event) {
             event.preventDefault(); // Prevent default link behavior
-            window.location.href = "sign-in.html"; // Redirect to the Sign-In page
+            window.location.href = "profile.html"; // Redirect to the Sign-In page
         });
     }
 });
