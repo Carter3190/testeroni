@@ -1,91 +1,74 @@
-<html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In - Auxilium</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Login - Auxilium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
+      background-color: #f8b4b4;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f8b4b4;
     }
 
-    .signin-container {
+    .login-container {
       background-color: white;
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-      text-align: center;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       width: 300px;
+      text-align: center;
     }
 
-    .signin-container h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .signin-container input {
-      width: 100%;
+    .login-container input {
+      width: 90%;
       padding: 10px;
       margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
     }
 
-    .sign-in {
-      cursor: pointer;
-      background-color: #d6c6f7;
+    .login-container button {
       padding: 10px 20px;
-      border-radius: 25px;
+      background-color: #d6c6f7;
       color: white;
-      text-decoration: none;
-      display: inline-block;
-      transition: background-color 0.3s;
       border: none;
-      font-size: 1rem;
-      width: 100%;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 10px;
     }
 
-    .sign-in:hover {
+    .login-container button:hover {
       background-color: #c0a0f2;
     }
   </style>
 </head>
 <body>
 
-  <div class="signin-container">
+  <div class="login-container">
     <h2>Sign In</h2>
-    <input type="email" placeholder='Email' required>
-    <input type="password" placeholder='Password' required>
-    <button class="sign-in" id="signInButton">Sign In</button>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
   </div>
 
   <script>
-    document.getElementById("signInButton").addEventListener("click", function() {
-      window.location.href = "dashboard.html";  // Redirect after sign-in
-    });
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Simple check (for demo purposes)
+      if (username && password) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("username", username);
+        window.location.href = "profile.html";
+      } else {
+        alert("Please enter both username and password.");
+      }
+    }
   </script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get the "Sign In" button by its ID
-        const signInButton = document.getElementById("signInButton");
-
-        if (signInButton) {
-            signInButton.addEventListener("click", function (event) {
-                event.preventDefault(); // Prevent default form submission (if using a form)
-                window.location.href = "index.html"; // Redirect to home page
-            });
-        }
-    });
-</script>
-
-
 </body>
 </html>
