@@ -9,7 +9,7 @@
   <style>
     /* Basic Reset */
     * {
-      margin: 0;
+      margin: -2px;
       padding: 0;
       box-sizing: border-box;
     }
@@ -23,22 +23,24 @@
     /* Header */
     header {
       background-color: #f8b4b4;
-      padding: 20px;
+      padding: 1px;
       text-align: center;
       color: white;
-      position: relative;
     }
 
     header h1 {
+      position: relative;
+      top: 10px;
+      right: 0px;
       font-size: 3rem;
       font-weight: 600;
     }
-
+   
     /* Sign In Button */
     .sign-in {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+      position: relative;
+      top: -40px;
+      left: 390px;
       background-color: #d6c6f7;
       padding: 10px 20px;
       border-radius: 25px;
@@ -52,27 +54,22 @@
     .sign-in:hover {
       background-color: #c0a0f2;
      }
-    
-/* Join-Us button css */
-    
-.auth-buttons {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-}
+   
 
-.join-us {
-  background-color: #d6c6f7;
-  padding: 10px 20px;
-  border-radius: 25px;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
+   /* join us Button */
+    .join-us {
+      position:relative;
+      top: -40px;
+      left: 380px;
+      background-color: #d6c6f7;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
 
 .join-us:hover {
   background-color: #c0a0f2;
@@ -162,9 +159,9 @@
 <div class="auth-buttons">
   <a href="profile.html" class="join-us"  id="JoinUsText">Join Us</a>
   <a href="sign-up.html" class="sign-in" id="signInText">Sign Up</a>
-</div> 
+</div>
   </header>
-  
+ 
 
   <!-- Hero Section -->
   <div class="hero">
