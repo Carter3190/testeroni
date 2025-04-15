@@ -5,7 +5,7 @@
         if (signInButton) {
             signInButton.addEventListener("click", function (event) {
                 event.preventDefault();
-                window.location.href = "profile.html";
+                window.location.href = "ready-to-sell.html";
             });
         }
     });
