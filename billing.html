@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auxilium Seller Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdf6ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #d6c6f7;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      color: #a855f7;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      background-color: #f8b4b4;
+      color: white;
+      padding: 14px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ec8e8e;
+    }
+
+    .payout-section {
+      margin-top: 40px;
+      text-align: center;
+      background-color: #fef3f9;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px dashed #f8b4b4;
+    }
+
+    .payout-section h3 {
+      color: #e879f9;
+      margin-bottom: 10px;
+    }
+
+    .payout-section p {
+      color: #6b7280;
+      font-size: 1rem;
+    }
+
+    .paid-btn {
+      margin-top: 15px;
+      background-color: #a78bfa;
+    }
+
+    .paid-btn:hover {
+      background-color: #8b5cf6;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Auxilium Seller Dashboard</h1>
+  </header>
+
+  <div class="container">
+    <h2>Enter Your Banking Info</h2>
+    <form id="bankForm">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" required>
+
+      <label for="accountNumber">Account Number</label>
+      <input type="text" id="accountNumber" required>
+
+      <label for="routingNumber">Routing Number</label>
+      <input type="text" id="routingNumber" required>
+
+      <label for="bankName">Bank Name</label>
+      <input type="text" id="bankName" required>
+
+      <button type="submit">Save Banking Info</button>
+    </form>
+
+    <div class="payout-section">
+      <h3>Get Paid</h3>
+      <p>You’ve earned <strong>$145.00</strong> from recent bookings.</p>
+      <button class="paid-btn" onclick="simulatePayout()">Send Payout</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('bankForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Banking information saved (for demo purposes only).');
+    });
+
+    function simulatePayout() {
+      alert('Success! Payment of $145.00 has been sent to your account.');
+    }
+  </script>
+
+</body>
+</html>
