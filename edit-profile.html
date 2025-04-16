@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile - Auxilium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      color: #333;
+    }
+
+    header {
+      background-color: #f8b4b4;
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 30px;
+      background-color: #fefefe;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .profile-pic-container {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .profile-pic-label {
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 10px;
+      border: 3px solid #d6c6f7;
+      background-color: #eee;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .profile-pic:hover {
+      opacity: 0.7;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .save-btn {
+      background-color: #d6c6f7;
+      color: white;
+    }
+
+    .save-btn:hover {
+      background-color: #c0a0f2;
+    }
+
+    .back-btn {
+      background-color: #f8b4b4;
+      color: white;
+    }
+
+    .back-btn:hover {
+      background-color: #e08a8a;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Edit Profile - Auxilium</h1>
+  </header>
+
+  <div class="container">
+    <h2>Edit Your Information</h2>
+
+    <div class="profile-pic-container">
+      <label for="profileImage" class="profile-pic-label">Profile Picture</label>
+      <input type="file" accept="image/*" id="profileImage" class="hidden-input" onchange="previewProfileImage(event)">
+      <img src="https://via.placeholder.com/150?text=Profile" alt="Profile" id="profilePicPreview" class="profile-pic" onclick="document.getElementById('profileImage').click()">
+    </div>
+
+    <form id="editProfileForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" required />
+
+      <label for="service">Service Offered</label>
+      <input type="text" id="service" required />
+
+      <label for="location">Location</label>
+      <input type="text" id="location" required />
+
+      <label for="language">Language</label>
+      <select id="language" required>
+        <option value="">Select language</option>
+        <option>English</option>
+        <option>Spanish</option>
+        <option>French</option>
+        <option>German</option>
+        <option>Chinese</option>
+        <option>Arabic</option>
+        <option>Hindi</option>
+        <option>Portuguese</option>
+        <option>Russian</option>
+        <option>Japanese</option>
+      </select>
+
+      <div class="button-row">
+        <button type="button" class="back-btn" onclick="goBack()">Back</button>
+        <button type="submit" class="save-btn">Save Changes</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Load data
+    window.onload = function () {
+      const data = JSON.parse(localStorage.getItem("profileData")) || {};
+      document.getElementById("username").value = data.username || "";
+      document.getElementById("service").value = data.service || "";
+      document.getElementById("location").value = data.location || "";
+      document.getElementById("language").value = data.language || "";
+      if (data.profilePic) {
+        document.getElementById("profilePicPreview").src = data.profilePic;
+      }
+    };
+
+    // Preview profile picture
+    function previewProfileImage(event) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const img = document.getElementById("profilePicPreview");
+        img.src = reader.result;
+        // Save image temporarily to localStorage
+        const data = JSON.parse(localStorage.getItem("profileData")) || {};
+        data.profilePic = reader.result;
+        localStorage.setItem("profileData", JSON.stringify(data));
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
+    // Save form
+    document.getElementById("editProfileForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const profileData = {
+        username: document.getElementById("username").value,
+        service: document.getElementById("service").value,
+        location: document.getElementById("location").value,
+        language: document.getElementById("language").value,
+        profilePic: document.getElementById("profilePicPreview").src
+      };
+      localStorage.setItem("profileData", JSON.stringify(profileData));
+      alert("Profile updated!");
+      window.location.href = "profile.html";
+    });
+
+    function goBack() {
+      window.location.href = "profile.html";
+    }
+  </script>
+</body>
+</html>
