@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -54,9 +54,9 @@
       border-radius: 50%;
       background-color: #e0e0e0;
       background-image: url('https://cdn-icons-png.flaticon.com/512/847/847969.png');
-      background-size: 60%;
+      background-size: cover; /* Ensures image covers the circle */
+      background-position: center; /* Ensures image is centered */
       background-repeat: no-repeat;
-      background-position: center;
       border: 3px solid #d6c6f7;
       cursor: pointer;
       transition: background-color 0.3s;
@@ -94,9 +94,7 @@
     .stats {
       margin: 40px 0 20px;
       display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 20px;
+      justify-content: center;
     }
 
     .stat {
@@ -136,24 +134,51 @@
       overflow: hidden;
     }
 
+    .portfolio-preview {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      z-index: 1;
+    }
+
     .portfolio-item input[type="file"] {
       position: absolute;
       width: 100%;
       height: 100%;
       opacity: 0;
       cursor: pointer;
+      z-index: 2;
     }
 
-    .price-tag {
+    .price-input {
       position: absolute;
       bottom: 8px;
       right: 8px;
       background-color: #f8b4b4;
       color: white;
-      padding: 5px 10px;
+      border: none;
       border-radius: 10px;
+      padding: 5px 10px;
       font-size: 0.9rem;
       font-weight: bold;
+      width: 120px;
+      text-align: center;
+      outline: none;
+      z-index: 3;
+    }
+
+    .price-input::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .price-input:focus {
+      background-color: #f28b8b;
     }
 
     .footer-buttons {
@@ -234,8 +259,6 @@
     </div>
 
     <div class="stats">
-      <div class="stat">⭐ Rating: 0 / 5</div>
-      <div class="stat">💬 0 Reviews</div>
       <div class="stat">⏱ Seller Since: <span id="signupDate"></span></div>
     </div>
 
@@ -243,16 +266,19 @@
       <h3>Previous Work</h3>
       <div class="portfolio-gallery">
         <div class="portfolio-item">
+          <div class="portfolio-preview"></div>
           <input type="file" accept="image/*">
-          <div class="price-tag">Starting at $</div>
+          <input type="text" class="price-input" placeholder="Starting at $" />
         </div>
         <div class="portfolio-item">
+          <div class="portfolio-preview"></div>
           <input type="file" accept="image/*">
-          <div class="price-tag">Starting at $</div>
+          <input type="text" class="price-input" placeholder="Starting at $" />
         </div>
         <div class="portfolio-item">
+          <div class="portfolio-preview"></div>
           <input type="file" accept="image/*">
-          <div class="price-tag">Starting at $</div>
+          <input type="text" class="price-input" placeholder="Starting at $" />
         </div>
       </div>
     </div>
@@ -269,22 +295,65 @@
     const options = { year: 'numeric', month: 'long' };
     document.getElementById("signupDate").textContent = signupDate.toLocaleDateString(undefined, options);
 
-    // Image preview
+    // Profile picture preview
     function previewImage(event) {
       const reader = new FileReader();
       reader.onload = function(){
         const preview = document.querySelector(".profile-pic-preview");
         preview.style.backgroundImage = `url(${reader.result})`;
+        preview.style.backgroundSize = 'cover';  // Ensure the image always fits the circle
+        preview.style.backgroundPosition = 'center'; // Center the image
       };
       reader.readAsDataURL(event.target.files[0]);
     }
-  </script>
-  
-  <script>
-  document.querySelector(".back-btn").addEventListener("click", function() {
-    window.location.href = "ready-to-sell.html";
-  });
-</script>
 
+    // Portfolio image previews
+    document.querySelectorAll('.portfolio-item input[type="file"]').forEach((input, index) => {
+      input.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const preview = input.parentElement.querySelector('.portfolio-preview');
+          preview.style.backgroundImage = `url(${e.target.result})`;
+        };
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      });
+    });
+
+    // Go back button
+    document.querySelector(".back-btn").addEventListener("click", function() {
+      window.location.href = "ready-to-sell.html";
+    });
+
+    // Price input formatting
+    document.querySelectorAll('.price-input').forEach(input => {
+      const originalPlaceholder = input.placeholder;
+
+      input.addEventListener('focus', () => {
+        input.placeholder = '';
+      });
+
+      input.addEventListener('blur', () => {
+        if (!input.value.trim()) {
+          input.placeholder = originalPlaceholder;
+        }
+      });
+
+      input.addEventListener('input', () => {
+        let value = input.value.replace(/[^\d.]/g, '');
+        const parts = value.split('.');
+        if (parts.length > 2) {
+          value = parts[0] + '.' + parts.slice(1).join('');
+        }
+        if (value) {
+          input.value = `$${value}`;
+        } else {
+          input.value = '';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
