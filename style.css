@@ -1,19 +1,24 @@
-.home-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.home-btn {
   background-color: #d6c6f7;
   color: white;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  font-size: 1rem;
+  border: none;
   transition: background-color 0.3s ease;
-  z-index: 1000;
+  font-family: 'Poppins', sans-serif;
 }
 
-.home-button:hover {
+.home-btn:hover {
   background-color: #b6a3f0;
 }
