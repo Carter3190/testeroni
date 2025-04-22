@@ -99,3 +99,19 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 </script>
 
+<script>
+  document.getElementById("saveAvailabilityBtn").addEventListener("click", function() {
+    // Save availability selections
+    const days = Array.from(document.querySelectorAll("input[name='days']:checked")).map(el => el.value);
+    const startTime = document.getElementById("startTime").value;
+    const endTime = document.getElementById("endTime").value;
+
+    // Save to localStorage
+    localStorage.setItem("availabilityDays", JSON.stringify(days));
+    localStorage.setItem("availabilityStart", startTime);
+    localStorage.setItem("availabilityEnd", endTime);
+
+    // Redirect to post-login.html
+    window.location.href = "post-login.html";
+  });
+</script>
