@@ -1,4 +1,3 @@
-<html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -12,49 +11,55 @@
       background-color: #fff;
       color: #333;
     }
-/* start of new code */
-header {
-  background-color: #f8b4b4;
-  padding: 20px 40px;
-  color: white;
-}
 
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1000px;
-  margin: 0 auto;
-}
+    header {
+      background-color: #f8b4b4;
+      padding: 20px 40px;
+      color: white;
+    }
 
-.page-title {
-  margin: 0;
-  font-size: 1.8rem;
-  font-weight: 600;
-  text-align: right;
-  flex-grow: 1;
-}
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+    }
 
-.header-btn {
-  background-color: #d6c6f7;
-  color: white;
-  padding: 10px 24px;
-  border: none;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
-  transition: background-color 0.3s ease;
-}
+    .page-title {
+      margin: 0 auto;
+      font-size: 1.8rem;
+      font-weight: 600;
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
 
-.header-btn:hover {
-  background-color: #b6a3f0;
-}
-/* end of new code */
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0;
+    .header-btn {
+      background-color: #d6c6f7;
+      color: white;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s ease;
+      z-index: 1;
+    }
+
+    .header-btn:hover {
+      background-color: #b6a3f0;
+    }
+
+    header h2 {
+      font-size: 1.4rem;
+      margin: 10px auto 0;
+      text-align: center;
+      font-weight: 400;
     }
 
     .container {
@@ -117,14 +122,13 @@ header {
 </head>
 <body>
 
-
   <header>
-    <h1>Ready to Sell with Auxilium?</h1>
-    <h2> Here's the Basics</h2>
-  <div class="header-container">
-    <a href="index.html" class="header-btn">Home</a>
-  </div>
- </header>
+    <div class="header-container">
+      <a href="index.html" class="header-btn">Home</a>
+      <h1 class="page-title">Ready to Sell with Auxilium?</h1>
+    </div>
+    <h2>Here's the Basics</h2>
+  </header>
 
   <div class="container">
 
@@ -152,7 +156,6 @@ header {
         <p>Set your pricing, availability, and location to attract the right customers. It's your business — your way</p>
       </div>
     </div>
-    
     
     <div class="get-started-wrapper">
       <a href="profile.html" class="get-started-btn">Get Started</a>
