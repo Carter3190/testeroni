@@ -1,16 +1,1 @@
-.home-btn {
-  background-color: #d6c6f7;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 1rem;
-  border: none;
-  transition: background-color 0.3s ease;
-  font-family: 'Poppins', sans-serif;
-}
 
-.home-btn:hover {
-  background-color: #b6a3f0;
-}
