@@ -138,17 +138,14 @@
   <div class="container">
     <h2>Edit Your Information</h2>
 
-<div class="profile-pic-container">
-  <label for="profileImage" class="profile-pic-label">Profile Picture</label>
-  <input type="file" accept="image/*" id="profileImage" class="hidden-input" onchange="previewProfileImage(event)">
-  <img src="https://via.placeholder.com/150?text=Profile" alt="Profile" id="profilePicPreview" class="profile-pic" onclick="document.getElementById('profileImage').click()">
-  
-  <!-- Remove Button Right Below the Image -->
-  <div>
-    <button type="button" id="removePicBtn" class="remove-pic-btn">Remove Picture</button>
-  </div>
-</div>
-
+    <div class="profile-pic-container">
+      <label for="profileImage" class="profile-pic-label">Profile Picture</label>
+      <input type="file" accept="image/*" id="profileImage" class="hidden-input" onchange="previewProfileImage(event)">
+      <img src="https://via.placeholder.com/150?text=Profile" alt="Profile" id="profilePicPreview" class="profile-pic" onclick="document.getElementById('profileImage').click()">
+      <div>
+        <button type="button" id="removePicBtn" class="remove-pic-btn">Remove Picture</button>
+      </div>
+    </div>
 
     <form id="editProfileForm">
       <label for="username">Username</label>
@@ -185,7 +182,7 @@
   <script>
     const removeBtn = document.getElementById("removePicBtn");
 
-    // Load data
+    // Load saved data on page load
     window.onload = function () {
       const data = JSON.parse(localStorage.getItem("profileData")) || {};
       document.getElementById("username").value = data.username || "";
@@ -222,7 +219,7 @@
       removeBtn.style.display = "none";
     });
 
-    // Save form
+    // Save profile and redirect
     document.getElementById("editProfileForm").addEventListener("submit", function (e) {
       e.preventDefault();
       const profileData = {
@@ -234,11 +231,11 @@
       };
       localStorage.setItem("profileData", JSON.stringify(profileData));
       alert("Profile updated!");
-      window.location.href = "post-login.html";
+      window.location.href = "post-login.html"; // Redirect to post-login
     });
 
     function goBack() {
-      window.location.href = "post-login.html";
+      window.location.href = "post-login.html"; // Also redirect to post-login
     }
   </script>
 </body>
