@@ -1,0 +1,248 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Auxilium – Verify Your Email</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fff;
+      --card: #f8f8f8;
+      --txt: #333;
+      --muted: #777;
+      --brand: #f8b4b4; 
+      --brand-dark: #f29292;
+      --danger: #ef4444;
+      --border: #ddd;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--txt);
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+    }
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.1);
+    }
+    .brand { display: flex; gap: .6rem; align-items: center; margin-bottom: 1rem; }
+    .brand .logo {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--brand); display: grid; place-items: center;
+      font-weight: 800; color: #fff;
+    }
+    h1 { font-size: 1.6rem; margin: .25rem 0 1rem; }
+    p { color: var(--muted); margin: .25rem 0 1.25rem; line-height: 1.5; }
+    label { display: block; margin: .75rem 0 .35rem; color: var(--txt); font-weight: 600; }
+    input[type="email"], input[type="text"] {
+      width: 100%;
+      padding: .85rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--txt);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(248,180,180,.3);
+    }
+    .btn {
+      margin-top: 1rem;
+      width: 100%;
+      padding: .9rem 1rem;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(180deg, var(--brand), var(--brand-dark));
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .05s ease, filter .2s ease;
+      text-transform: uppercase;
+      font-size: .9rem;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn.secondary {
+      background: transparent;
+      color: var(--txt);
+      border: 1px solid var(--border);
+      text-transform: none;
+      font-weight: 600;
+    }
+    .muted { color: var(--muted); font-size: .9rem; }
+    .status {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: .8rem 1rem;
+      background: #fff4f4;
+      border: 1px dashed var(--border);
+      font-size: .9rem;
+    }
+    .status.success { border-color: rgba(248,180,180,.5); color: var(--brand-dark); background: #fff0f0; }
+    .status.error { border-color: rgba(239,68,68,.5); color: var(--danger); background: #ffeaea; }
+    .divider {
+      margin: 1.5rem 0;
+      height: 1px;
+      background: var(--border);
+      border-radius: 1px;
+    }
+    .help { font-size: .85rem; color: var(--muted); }
+    .code { font-family: monospace; background: #f3f3f3; padding: 0 .25rem; border-radius: 4px; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">
+      <div class="logo">A</div>
+      <strong>Auxilium</strong>
+    </div>
+    <h1>Verify your email</h1>
+    <p>We’ll email you a secure link to confirm your address. If you already have a token, you can paste it below.</p>
+
+    <section id="request-section">
+      <label for="email">Email address</label>
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+      <button id="sendBtn" class="btn" type="button">Send verification email</button>
+      <p class="help">We’ll send a link from <span class="code">no-reply@auxilium.app</span>. Check spam if you don’t see it.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="verify-section">
+      <label for="token">Verification token (from the link)</label>
+      <input id="token" type="text" placeholder="Paste token or use the link" autocomplete="one-time-code" />
+      <button id="verifyBtn" class="btn" type="button">Verify email</button>
+      <button id="openInboxBtn" class="btn secondary" type="button">Open email app</button>
+      <p id="countdown" class="help"></p>
+    </section>
+
+    <div id="status" class="status hidden"></div>
+  </main>
+
+
+  <script>
+    const API_BASE = (window.AUXILIUM_API_BASE || "");
+    const REDIRECT_URL = "/post-login.html";
+
+    const qs = (s) => document.querySelector(s);
+    const statusEl = qs('#status');
+    const emailEl = qs('#email');
+    const tokenEl = qs('#token');
+    const sendBtn = qs('#sendBtn');
+    const verifyBtn = qs('#verifyBtn');
+    const countdownEl = qs('#countdown');
+
+    function showStatus(msg, type='info') {
+      statusEl.textContent = msg;
+      statusEl.classList.remove('hidden', 'success', 'error');
+      if (type==='success') statusEl.classList.add('success');
+      if (type==='error') statusEl.classList.add('error');
+    }
+    function hideStatus() { statusEl.classList.add('hidden'); statusEl.textContent = ''; }
+
+    async function sendVerificationEmail() {
+      hideStatus();
+      const email = (emailEl.value||'').trim();
+      if (!email) { showStatus('Please enter your email.', 'error'); return; }
+
+      if (!API_BASE) {
+        const demoToken = crypto.getRandomValues(new Uint32Array(1))[0].toString(16)+Date.now().toString(16);
+        localStorage.setItem('auxilium_demo_token', demoToken);
+        showStatus('Demo mode: generated local token. Paste below to verify. Token: '+demoToken, 'success');
+        startResendCountdown(60);
+        return;
+      }
+
+      try {
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'Sending…';
+        const res = await fetch(API_BASE+'/api/auth/send-verification-email',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          credentials:'include',
+          body:JSON.stringify({email})
+        });
+        const data = await res.json().catch(()=>({}));
+        if(!res.ok) throw new Error(data?.message||'Failed to send email');
+        showStatus('Verification email sent. Please check inbox.', 'success');
+        startResendCountdown(60);
+      } catch(err) {
+        showStatus(err.message||'Something went wrong.', 'error');
+      } finally {
+        sendBtn.disabled=false;
+        sendBtn.textContent='Send verification email';
+      }
+    }
+
+    async function verifyEmailToken(inputToken) {
+      hideStatus();
+      const token = (inputToken||tokenEl.value||'').trim();
+      if (!token) { showStatus('Please paste your verification token.', 'error'); return; }
+
+      if (!API_BASE) {
+        const ok = token && token===localStorage.getItem('auxilium_demo_token');
+        if(ok){ showStatus('Email verified (demo mode). Redirecting…','success'); setTimeout(()=>window.location.assign(REDIRECT_URL),800);}
+        else { showStatus('Invalid token (demo mode).','error'); }
+        return;
+      }
+
+      try {
+        verifyBtn.disabled=true;
+        verifyBtn.textContent='Verifying…';
+        const res = await fetch(API_BASE+'/api/auth/verify-email',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          credentials:'include',
+          body:JSON.stringify({token})
+        });
+        const data = await res.json().catch(()=>({}));
+        if(!res.ok) throw new Error(data?.message||'Verification failed');
+        showStatus('Email verified! Redirecting…','success');
+        setTimeout(()=>window.location.assign(REDIRECT_URL),800);
+      } catch(err) {
+        showStatus(err.message||'Could not verify token.','error');
+      } finally {
+        verifyBtn.disabled=false;
+        verifyBtn.textContent='Verify email';
+      }
+    }
+
+    function startResendCountdown(seconds){
+      let left=seconds;
+      countdownEl.textContent=`You can request another email in ${left}s.`;
+      const id=setInterval(()=>{
+        left-=1;
+        if(left<=0){ clearInterval(id); countdownEl.textContent=''; return; }
+        countdownEl.textContent=`You can request another email in ${left}s.`;
+      },1000);
+    }
+
+    qs('#openInboxBtn').addEventListener('click',()=>{
+      const to=(emailEl.value||'').trim();
+      const url=to?`mailto:${encodeURIComponent(to)}`:'mailto:';
+      window.location.href=url;
+    });
+
+    sendBtn.addEventListener('click', sendVerificationEmail);
+    verifyBtn.addEventListener('click',()=>verifyEmailToken());
+
+    (function autoVerifyFromURL(){
+      const url=new URL(window.location.href);
+      const t=url.searchParams.get('token');
+      if(t){ tokenEl.value=t; verifyEmailToken(t); }
+    })();
+  </script>
+</body>
+</html>
